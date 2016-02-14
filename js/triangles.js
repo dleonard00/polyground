@@ -1641,8 +1641,8 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
         LIGHT.ambient = ambient;
 
         // Hacky way to allow manual update of the HEX colors for light's diffuse
-        gui.__folders.Light.__controllers[1].updateDisplay();
-        gui.__folders.Light.__controllers[2].updateDisplay();
+        // gui.__folders.Light.__controllers[1].updateDisplay();
+        // gui.__folders.Light.__controllers[2].updateDisplay();
       }
     }
   };
@@ -1741,7 +1741,7 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
   //------------------------------
   var center = FSS.Vector3.create();
   var container = document.getElementById('container');
-  var controls = document.getElementById('controls');
+  // var controls = document.getElementById('controls');
   var output = document.getElementById('output');
   var renderer, scene, mesh, geometry, material;
   var webglRenderer, canvasRenderer, svgRenderer;
@@ -1755,8 +1755,8 @@ c);e.bind(this.domElement,"transitionend",c);e.bind(this.domElement,"oTransition
     createScene();
     createMesh();
     addLights();
-    addEventListeners();
-    addControls();
+    // addEventListeners();
+    // addControls();
     LIGHT.randomize();
     resize(container.offsetWidth, container.offsetHeight);
     animate();
@@ -1882,118 +1882,118 @@ console.log(num)
     renderer.render(scene);
   }
 
-  function addEventListeners() {
-    window.addEventListener('resize', onWindowResize);
-    container.addEventListener('mousemove', onMouseMove);
-  }
+  // function addEventListeners() {
+  //   window.addEventListener('resize', onWindowResize);
+  //   container.addEventListener('mousemove', onMouseMove);
+  // }
 
-  function addControls() {
-    var i, l, light, folder, controller;
-
-    // Create GUI
-    gui = new dat.GUI({autoPlace:false});
-
-    controls.appendChild(gui.domElement);
-
-    // Create folders
-    renderFolder = gui.addFolder('Render');
-    meshFolder = gui.addFolder('Mesh');
-    lightFolder = gui.addFolder('Light');
-    exportFolder = gui.addFolder('Export');
-
-    // Open folders
-    lightFolder.open();
-
-    // Add Render Controls
-    controller = renderFolder.add(RENDER, 'renderer', {webgl:WEBGL, canvas:CANVAS, svg:SVG});
-    controller.onChange(function(value) {
-      setRenderer(value);
-    });
-
-    // Add Mesh Controls
-    controller = meshFolder.addColor(MESH, 'ambient');
-    controller.onChange(function(value) {
-      for (i = 0, l = scene.meshes.length; i < l; i++) {
-        scene.meshes[i].material.ambient.set(value);
-      }
-    });
-    controller = meshFolder.addColor(MESH, 'diffuse');
-    controller.onChange(function(value) {
-      for (i = 0, l = scene.meshes.length; i < l; i++) {
-        scene.meshes[i].material.diffuse.set(value);
-      }
-    });
-    controller = meshFolder.add(MESH, 'width', 0.05, 2);
-    controller.onChange(function(value) {
-      if (geometry.width !== value * renderer.width) { createMesh(); }
-    });
-    controller = meshFolder.add(MESH, 'height', 0.05, 2);
-    controller.onChange(function(value) {
-      if (geometry.height !== value * renderer.height) { createMesh(); }
-    });
-
-    controller = meshFolder.add(MESH, 'depth', 0, MESH.maxdepth).listen();
-
-    controller = meshFolder.add(MESH, 'slices', 1, 800);
-    controller.step(1);
-    controller.onChange(function(value) {
-      if (geometry.slices !== value) { createMesh(); }
-    });
-
-    // Add Light Controls
-    // TODO: add the number of lights dynamically
-    controller = lightFolder.add(LIGHT, 'currIndex', {1:1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7}).name('Current light').listen();
-    controller.onChange(function(value) {
-      LIGHT.proxy = scene.lights[value-1];
-
-      LIGHT.ambient = LIGHT.proxy.ambient.hex;
-      LIGHT.diffuse = LIGHT.proxy.diffuse.hex;
-      LIGHT.xPos    = LIGHT.proxy.position[0];
-      LIGHT.yPos    = LIGHT.proxy.position[1];
-      LIGHT.zOffset = LIGHT.proxy.position[2];
-
-      // Hacky way to allow manual update of the HEX colors for light's ambient and diffuse
-      gui.__folders.Light.__controllers[1].updateDisplay();
-      gui.__folders.Light.__controllers[2].updateDisplay();
-    });
-
-    controller = lightFolder.addColor(LIGHT, 'ambient');
-    controller.onChange(function(value) {
-      LIGHT.proxy.ambient.set(value);
-      LIGHT.proxy.ambientHex =  LIGHT.proxy.ambient.format();
-    });
-
-    controller = lightFolder.addColor(LIGHT, 'diffuse');
-    controller.onChange(function(value) {
-      LIGHT.proxy.diffuse.set(value);
-      LIGHT.proxy.diffuseHex = LIGHT.proxy.diffuse.format();
-    });
-
-    controller = lightFolder.add(LIGHT, 'count', 1, 7).listen();
-    controller.step(1);
-    controller.onChange(function(value) {
-      if (scene.lights.length !== value) {
-        // If the value is more then the number of lights, add lights, otherwise delete lights from the scene
-        if (value > scene.lights.length) {
-          addLight();
-        } else {
-          trimLights(value);
-        }
-      }
-    });
-
-    controller = lightFolder.add(LIGHT, 'xPos', -mesh.geometry.width/2, mesh.geometry.width/2).listen();
-    controller.step(1);
-    controller.onChange(function(value) {
-      LIGHT.proxy.setPosition(value, LIGHT.proxy.position[1], LIGHT.proxy.position[2]);
-    });
-
-    controller = lightFolder.add(LIGHT, 'yPos', -mesh.geometry.height/2, mesh.geometry.height/2).listen();
-    controller.step(1);
-    controller.onChange(function(value) {
-      LIGHT.proxy.setPosition(LIGHT.proxy.position[0], value, LIGHT.proxy.position[2]);
-    });
-
+  // function addControls() {
+  //   var i, l, light, folder, controller;
+  //
+  //   // Create GUI
+  //   gui = new dat.GUI({autoPlace:false});
+  //
+  //   // controls.appendChild(gui.domElement);
+  //
+  //   // Create folders
+  //   renderFolder = gui.addFolder('Render');
+  //   meshFolder = gui.addFolder('Mesh');
+  //   lightFolder = gui.addFolder('Light');
+  //   exportFolder = gui.addFolder('Export');
+  //
+  //   // Open folders
+  //   lightFolder.open();
+  //
+  //   // Add Render Controls
+  //   controller = renderFolder.add(RENDER, 'renderer', {webgl:WEBGL, canvas:CANVAS, svg:SVG});
+  //   controller.onChange(function(value) {
+  //     setRenderer(value);
+  //   });
+  //
+  //   // Add Mesh Controls
+  //   controller = meshFolder.addColor(MESH, 'ambient');
+  //   controller.onChange(function(value) {
+  //     for (i = 0, l = scene.meshes.length; i < l; i++) {
+  //       scene.meshes[i].material.ambient.set(value);
+  //     }
+  //   });
+  //   controller = meshFolder.addColor(MESH, 'diffuse');
+  //   controller.onChange(function(value) {
+  //     for (i = 0, l = scene.meshes.length; i < l; i++) {
+  //       scene.meshes[i].material.diffuse.set(value);
+  //     }
+  //   });
+  //   controller = meshFolder.add(MESH, 'width', 0.05, 2);
+  //   controller.onChange(function(value) {
+  //     if (geometry.width !== value * renderer.width) { createMesh(); }
+  //   });
+  //   controller = meshFolder.add(MESH, 'height', 0.05, 2);
+  //   controller.onChange(function(value) {
+  //     if (geometry.height !== value * renderer.height) { createMesh(); }
+  //   });
+  //
+  //   controller = meshFolder.add(MESH, 'depth', 0, MESH.maxdepth).listen();
+  //
+  //   controller = meshFolder.add(MESH, 'slices', 1, 800);
+  //   controller.step(1);
+  //   controller.onChange(function(value) {
+  //     if (geometry.slices !== value) { createMesh(); }
+  //   });
+  //
+  //   // Add Light Controls
+  //   // TODO: add the number of lights dynamically
+  //   controller = lightFolder.add(LIGHT, 'currIndex', {1:1, 2:2, 3:3, 4:4, 5:5, 6:6, 7:7}).name('Current light').listen();
+  //   controller.onChange(function(value) {
+  //     LIGHT.proxy = scene.lights[value-1];
+  //
+  //     LIGHT.ambient = LIGHT.proxy.ambient.hex;
+  //     LIGHT.diffuse = LIGHT.proxy.diffuse.hex;
+  //     LIGHT.xPos    = LIGHT.proxy.position[0];
+  //     LIGHT.yPos    = LIGHT.proxy.position[1];
+  //     LIGHT.zOffset = LIGHT.proxy.position[2];
+  //
+  //     // Hacky way to allow manual update of the HEX colors for light's ambient and diffuse
+  //     gui.__folders.Light.__controllers[1].updateDisplay();
+  //     gui.__folders.Light.__controllers[2].updateDisplay();
+  //   });
+  //
+  //   controller = lightFolder.addColor(LIGHT, 'ambient');
+  //   controller.onChange(function(value) {
+  //     LIGHT.proxy.ambient.set(value);
+  //     LIGHT.proxy.ambientHex =  LIGHT.proxy.ambient.format();
+  //   });
+  //
+  //   controller = lightFolder.addColor(LIGHT, 'diffuse');
+  //   controller.onChange(function(value) {
+  //     LIGHT.proxy.diffuse.set(value);
+  //     LIGHT.proxy.diffuseHex = LIGHT.proxy.diffuse.format();
+  //   });
+  //
+  //   controller = lightFolder.add(LIGHT, 'count', 1, 7).listen();
+  //   controller.step(1);
+  //   controller.onChange(function(value) {
+  //     if (scene.lights.length !== value) {
+  //       // If the value is more then the number of lights, add lights, otherwise delete lights from the scene
+  //       if (value > scene.lights.length) {
+  //         addLight();
+  //       } else {
+  //         trimLights(value);
+  //       }
+  //     }
+  //   });
+  //
+  //   controller = lightFolder.add(LIGHT, 'xPos', -mesh.geometry.width/2, mesh.geometry.width/2).listen();
+  //   controller.step(1);
+  //   controller.onChange(function(value) {
+  //     LIGHT.proxy.setPosition(value, LIGHT.proxy.position[1], LIGHT.proxy.position[2]);
+  //   });
+  //
+  //   controller = lightFolder.add(LIGHT, 'yPos', -mesh.geometry.height/2, mesh.geometry.height/2).listen();
+  //   controller.step(1);
+  //   controller.onChange(function(value) {
+  //     LIGHT.proxy.setPosition(LIGHT.proxy.position[0], value, LIGHT.proxy.position[2]);
+  //   });
+  //
 
 
     /* JQuery Block ****
@@ -2004,59 +2004,59 @@ console.log(num)
 	** NaN Error in Firefox.
     */
 
-    controller = lightFolder.add(LIGHT, 'zOffset', 0, 1000).name('Distance').listen();
-	scrollButtonDistance = Number(LIGHT.proxy.position[2]);
-	//Firefox
-	$('#container').bind('DOMMouseScroll', function(e) {
-		if(e.originalEvent.detail > 0) {
-		 scrollButtonDistance = Number(Math.max(0, scrollButtonDistance - e.detail/4));
-		} else {
-		 scrollButtonDistance =  Number(Math.min(1000, scrollButtonDistance - e.detail/4));
-		}
+  //   controller = lightFolder.add(LIGHT, 'zOffset', 0, 1000).name('Distance').listen();
+	// scrollButtonDistance = Number(LIGHT.proxy.position[2]);
+	// //Firefox
+	// $('#container').bind('DOMMouseScroll', function(e) {
+	// 	if(e.originalEvent.detail > 0) {
+	// 	 scrollButtonDistance = Number(Math.max(0, scrollButtonDistance - e.detail/4));
+	// 	} else {
+	// 	 scrollButtonDistance =  Number(Math.min(1000, scrollButtonDistance - e.detail/4));
+	// 	}
+  //
+	// 	LIGHT.proxy.setPosition(LIGHT.proxy.position[0], LIGHT.proxy.position[1], scrollButtonDistance);
+	// 	 LIGHT.zOffset = scrollButtonDistance;
+	// 	LIGHT.z = scrollButtonDistance;
+	// 	gui.__folders.Light.__controllers[1].updateDisplay();
+	// 	gui.__folders.Light.__controllers[2].updateDisplay();
+	// 	return false;
+	// });
 
-		LIGHT.proxy.setPosition(LIGHT.proxy.position[0], LIGHT.proxy.position[1], scrollButtonDistance);
-		 LIGHT.zOffset = scrollButtonDistance;
-		LIGHT.z = scrollButtonDistance;
-		gui.__folders.Light.__controllers[1].updateDisplay();
-		gui.__folders.Light.__controllers[2].updateDisplay();
-		return false;
-	});
-
-	//IE, Opera, Safari
-	$('#container').bind('mousewheel', function(e) {
-		if(e.originalEvent.wheelDelta < 0) {
-		 scrollButtonDistance =  Number(Math.max(0, scrollButtonDistance + e.originalEvent.wheelDelta/4));
-		} else {
-		 scrollButtonDistance = Number(Math.min(1000, scrollButtonDistance + e.originalEvent.wheelDelta/4));
-		}
-
-		LIGHT.proxy.setPosition(Number(LIGHT.proxy.position[0]), Number(LIGHT.proxy.position[1]), scrollButtonDistance);
-		LIGHT.zOffset = scrollButtonDistance;
-		LIGHT.z = scrollButtonDistance;
-		gui.__folders.Light.__controllers[1].updateDisplay();
-		gui.__folders.Light.__controllers[2].updateDisplay();
-
-		return false;
-	});
+	// //IE, Opera, Safari
+	// $('#container').bind('mousewheel', function(e) {
+	// 	if(e.originalEvent.wheelDelta < 0) {
+	// 	 scrollButtonDistance =  Number(Math.max(0, scrollButtonDistance + e.originalEvent.wheelDelta/4));
+	// 	} else {
+	// 	 scrollButtonDistance = Number(Math.min(1000, scrollButtonDistance + e.originalEvent.wheelDelta/4));
+	// 	}
+  //
+	// 	LIGHT.proxy.setPosition(Number(LIGHT.proxy.position[0]), Number(LIGHT.proxy.position[1]), scrollButtonDistance);
+	// 	LIGHT.zOffset = scrollButtonDistance;
+	// 	LIGHT.z = scrollButtonDistance;
+	// 	gui.__folders.Light.__controllers[1].updateDisplay();
+	// 	gui.__folders.Light.__controllers[2].updateDisplay();
+  //
+	// 	return false;
+	// });
 
 	/* End JQuery Block */
 
-    controller.step(1);
-    controller.onChange(function(value) {
-      LIGHT.proxy.setPosition(LIGHT.proxy.position[0], LIGHT.proxy.position[1], value);
-    });
-
-    controller = lightFolder.add(LIGHT, 'randomize');
-
-    // Add Export Controls
-    controller = exportFolder.add(EXPORT, 'width', 100, 3000);
-    controller.step(100);
-    controller = exportFolder.add(EXPORT, 'height', 100, 3000);
-    controller.step(100);
-    controller = exportFolder.add(EXPORT, 'export').name('export big');
-    controller = exportFolder.add(EXPORT, 'exportCurrent').name('export this');
-
-  }
+  //   controller.step(1);
+  //   controller.onChange(function(value) {
+  //     LIGHT.proxy.setPosition(LIGHT.proxy.position[0], LIGHT.proxy.position[1], value);
+  //   });
+  //
+  //   controller = lightFolder.add(LIGHT, 'randomize');
+  //
+  //   // Add Export Controls
+  //   controller = exportFolder.add(EXPORT, 'width', 100, 3000);
+  //   controller.step(100);
+  //   controller = exportFolder.add(EXPORT, 'height', 100, 3000);
+  //   controller.step(100);
+  //   controller = exportFolder.add(EXPORT, 'export').name('export big');
+  //   controller = exportFolder.add(EXPORT, 'exportCurrent').name('export this');
+  //
+  // }
 
   function toggleEl(id) {
     var e = document.getElementById(id);
@@ -2085,36 +2085,36 @@ console.log(num)
   // Callbacks
   //------------------------------
 
-  function onWindowResize(event) {
-    resize(container.offsetWidth, container.offsetHeight);
-    render();
-  }
+  // function onWindowResize(event) {
+  //   resize(container.offsetWidth, container.offsetHeight);
+  //   render();
+  // }
+  //
+  // function onMouseMove(event) {
+  //   // if(LIGHT.pickedup){
+  //   //   LIGHT.xPos = (event.x || event.clientX) - renderer.width/2;
+  //   //   LIGHT.yPos = renderer.height/2 - (event.y || event.clientY);
+  //   //   LIGHT.proxy.setPosition(LIGHT.xPos, LIGHT.yPos, LIGHT.proxy.position[2]);
+  //   // }
+  // }
 
-  function onMouseMove(event) {
-    // if(LIGHT.pickedup){
-    //   LIGHT.xPos = (event.x || event.clientX) - renderer.width/2;
-    //   LIGHT.yPos = renderer.height/2 - (event.y || event.clientY);
-    //   LIGHT.proxy.setPosition(LIGHT.xPos, LIGHT.yPos, LIGHT.proxy.position[2]);
-    // }
-  }
-
-  // Hide the controls completely on pressing H
-  Mousetrap.bind('H', function() {
-    toggleEl('controls');
-    toggleEl('links');
-
-  });
+  // // Hide the controls completely on pressing H
+  // Mousetrap.bind('H', function() {
+  //   toggleEl('controls');
+  //   toggleEl('links');
+  //
+  // });
 
   // Add a light on ENTER key
-  Mousetrap.bind('enter', function() {
-    // LIGHT.count++;
-    // addLight();
-  });
+  // Mousetrap.bind('enter', function() {
+  //   // LIGHT.count++;
+  //   // addLight();
+  // });
 
   // Pick up the light when a space is pressed
-  Mousetrap.bind('space', function() {
-    // LIGHT.pickedup = !LIGHT.pickedup;
-  });
+  // Mousetrap.bind('space', function() {
+  //   // LIGHT.pickedup = !LIGHT.pickedup;
+  // });
 
   // Let there be light!
   initialise();
